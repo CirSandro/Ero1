@@ -17,7 +17,7 @@ MISSION:
  - propose modèle de cout pour opération de l'ensemble de la ville en fct des véhicule à disposition
 
 CONTRAINTE:
- - AUTHORS : liste des auteurs
+ - AUTHORS : liste des auteurs ********FAIT********
  - README : instruction installation et execution + descriptif structure du rendu
  - fichier pdf :4p synthèse reflexion (=donné utiliser+hypothese/modele+solution+limite) =>VOIR SUJET
  - script executant demonstration de notre solution
