@@ -23,3 +23,17 @@ CONTRAINTE:
  - script executant demonstration de notre solution
  - sous-arborescence de l'étude du vol du drone
  - sous-arborescence sur deneigement de 5lieux VOIR SUJET
+
+DRONE:
+ - 100€ /jour
+ - 0,01€ /km
+
+VEHICULE:
+ - type 1 : -> 500€ /jour
+   	    -> 1,1€ /km
+	    -> 1,1€ /h les 8premieres heures puis 1,3€ /h
+	    -> vitesse moyenne : 10km/h
+ - type 2 : -> 800€ /jour
+   	    -> 1,3€ /km
+	    -> 1,3€ /h les 8premieres heures puis 1,5€ /h
+	    -> vitesse moyenne : 20km/h
