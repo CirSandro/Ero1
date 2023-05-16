@@ -37,3 +37,6 @@ VEHICULE:
    	    -> 1,3€ /km
 	    -> 1,3€ /h les 8premieres heures puis 1,5€ /h
 	    -> vitesse moyenne : 20km/h
+
+Utilisation OSMnx:
+Boeing, G. 2017. OSMnx: New Methods for Acquiring, Constructing, Analyzing, and Visualizing Complex Street Networks. Computers, Environment and Urban Systems 65, 126-139. doi:10.1016/j.compenvurbsys.2017.05.004
