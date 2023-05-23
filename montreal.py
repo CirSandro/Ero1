@@ -2,34 +2,40 @@ import osmnx as ox
 import matplotlib.pyplot as plt
 import networkx as nx
 import copy
+from datetime import datetime
+from time import strftime
 
 city = ox.graph_from_place('Montréal, Canada', network_type='all')
 
 ox.plot_graph(city)
 plt.show()
- 
-#marche taille neoud bien
-def ParcourirArretes(graphe):
-    visites = set()  # Ensemble pour stocker les arêtes déjà visitées
-    graphe_modifie = copy.deepcopy(graphe)  # Copie du graphe initial
 
-    for u, v, data in graphe_modifie.edges(data=True):
-        if 'color' not in data or data['color'] == 'skyblue':
-            visiter_arrete(u, v)
-            nx.set_edge_attributes(graphe_modifie, {(u, v, None): {'color': 'red'}})  # Changer la couleur de l'arête visitée
-            #print(graph[u][v])
 
-    dessiner_graphe(graphe_modifie)
+def ParcourirArretes(graphe, sommet, visites,i): #parcours profondeur 
+    visites.add(sommet)  # Ajouter le sommet à l'ensemble des visites
+    voisins = graphe.neighbors(sommet)  # Récupérer les voisins du sommet
+    for voisin in voisins:
+        if voisin not in visites:  # Vérifier si le voisin n'a pas été visité
+            visiter_arrete(sommet, voisin)
+            ParcourirArretes(graphe, voisin, visites,1)
+            nx.set_edge_attributes(graphe, {(sommet, voisin, None): {'color': 'red'}})  # Changer la couleur de l'arête visitée
+            visiter_arrete(voisin,sommet)
+    if (i==0):
+        dessiner_graphe(graphe)
 
 def visiter_arrete(sommet, voisin):
-    print(f"Visite de l'arête entre {sommet} et {voisin}")
+    t = 1
+    #print(f"Chemain entre {sommet} et {voisin}")
 
 def dessiner_graphe(graphe):
+    print(datetime.now())
     pos = nx.spring_layout(graphe)
     edge_colors = [data.get('color', 'skyblue') for _, _, data in graphe.edges(data=True)]
     nx.draw(graphe, pos, with_labels=False, node_size=2, node_color='red', edge_color=edge_colors, width=2)
 
     plt.show()
 
-
-ParcourirArretes(city)
+print(datetime.now())
+graphe_modifie = copy.deepcopy(city)
+ParcourirArretes(graphe_modifie, list(graphe_modifie.nodes)[0], set(),0)
+print(datetime.now())
