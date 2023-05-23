@@ -24,8 +24,8 @@ def ParcourirArretes(graphe, sommet, visites,i): #parcours profondeur
         dessiner_graphe(graphe)
 
 def visiter_arrete(sommet, voisin):
-    t = 1
-    #print(f"Chemain entre {sommet} et {voisin}")
+    #t = 1
+    print(f"Chemain entre {sommet} et {voisin}")
 
 def dessiner_graphe(graphe):
     print(datetime.now())
