@@ -55,7 +55,7 @@ def dessiner_graphe(graphe):
     nx.draw(graphe, pos, with_labels=False, node_size=2, node_color='red', edge_color=edge_colors, width=2)
 
     plt.show()"""
-
+"""
 def trouver_chemin_eulerien(graph):
     chemin_eulerien = []
 
@@ -93,11 +93,94 @@ def dessiner_graphe(graphe):
     edge_colors = [data.get('color', 'skyblue') for _, _, data in graphe.edges(data=True)]
     nx.draw(graphe, pos, with_labels=False, node_size=2, node_color='red', edge_color=edge_colors, width=2)
 
-    plt.show()
+    plt.show()"""
 
+def trouver_chemin_eulerien(graph): # algorithme de Hierholzer
+    chemin_eulerien = []
+
+    stack = [next(iter(graph.nodes()))]  # Sommet de départ arbitraire
+    print(len(graph))
+    while stack:
+        sommet = stack[-1]
+
+        if graph.out_degree(sommet) == 0:
+            chemin_eulerien.append(stack.pop())
+        else:
+            prochain_sommet = next(iter(graph[sommet]))
+            graph.remove_edge(sommet, prochain_sommet)
+            stack.append(prochain_sommet)
+    return chemin_eulerien[::-1]
+
+
+
+def parcourir_ville(graph):
+    chemin_eulerien = trouver_chemin_eulerien(graph)
+    routes_empruntees = []
+
+    print
+    print("Parcours de la ville :")
+    for i in range(len(chemin_eulerien) - 1):
+        sommet_actuel = chemin_eulerien[i]
+        sommet_suivant = chemin_eulerien[i + 1]
+        routes_empruntees.append((sommet_actuel, sommet_suivant))
+        i+=1
+        print(f"Route de {sommet_actuel} à {sommet_suivant}")
+    #print(i)
+    print(f"Retour au sommet de départ : {chemin_eulerien[0]}")
+
+
+def choisir_sommet_depart(graph):
+    return list(graph.nodes)[0]  # Choisissez simplement le premier nœud du graphe comme nœud de départ
+
+def trouver_circuit_eulerien_modifie(graph):
+    stack = []  # Utilisé pour la recherche en profondeur itérative
+    circuit = []  # Circuit eulerien modifié
+
+    # Choisir un sommet de départ arbitraire
+    depart = choisir_sommet_depart(graph)
+    stack.append(depart)
+
+    # Dictionnaire auxiliaire pour suivre les arêtes visitées
+    arretes_visitees = {}
+
+    while stack:
+        sommet_actuel = stack[-1]
+
+        if graph.out_degree(sommet_actuel) > 0:
+            sommet_suivant = list(graph.successors(sommet_actuel))[0]  # Prendre le premier successeur non visité
+
+            # Ajouter la route au circuit
+            circuit.append((sommet_actuel, sommet_suivant))
+
+            # Mettre à jour le dictionnaire auxiliaire des arêtes visitées
+            if (sommet_actuel, sommet_suivant) in arretes_visitees:
+                arretes_visitees[(sommet_actuel, sommet_suivant)] += 1
+            else:
+                arretes_visitees[(sommet_actuel, sommet_suivant)] = 1
+
+            # Mettre à jour le graphe en supprimant l'arête visitée
+            graph.remove_edge(sommet_actuel, sommet_suivant)
+
+            # Empiler le sommet suivant pour poursuivre la recherche
+            stack.append(sommet_suivant)
+        else:
+            # Si aucun successeur non visité n'est trouvé, retirer le sommet actuel de la pile
+            stack.pop()
+
+    # Ajouter la dernière route pour revenir au sommet de départ
+    circuit.append((circuit[-1][1], depart))
+
+    # Afficher le circuit
+    for arrete in circuit:
+        print(f"Route de {arrete[0]} à {arrete[1]}")
+    print(f"Retour au depart {circuit[0][0]}")
+
+    return circuit
 
 print(datetime.now())
 graphe_modifie = copy.deepcopy(city)
 #ParcourirArretes(graphe_modifie, list(graphe_modifie.nodes)[0], set(),0)
-ParcourirArretes(graphe_modifie, list(graphe_modifie.nodes)[0])
+#ParcourirArretes(graphe_modifie, list(graphe_modifie.nodes)[0])
+#parcourir_ville(graphe_modifie)
+trouver_circuit_eulerien_modifie(graphe_modifie)
 print(datetime.now())
