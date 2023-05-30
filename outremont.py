@@ -9,7 +9,6 @@ import copy
 print(datetime.now())
 graph = ox.graph_from_place("Outremont, Montréal, Canada", network_type='all')
 
-
 ox.plot_graph(graph)
 plt.show()
 

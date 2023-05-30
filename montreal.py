@@ -9,7 +9,6 @@ import copy
 print("debut:", datetime.now())
 graph = ox.graph_from_place("Montréal, Canada", network_type='all')
 
-
 ox.plot_graph(graph)
 plt.show()
 print("fin graph, debut code:", datetime.now())
