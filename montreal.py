@@ -51,7 +51,7 @@ km = 0
 for u, v,z in graph.edges:
     km += graph[u][v][0]['length']
 
-print("Distance parcourue:", km_parcouru, "km. Distance routes ville:",km)
+print("Distance parcourue:", km_parcouru, "m. Distance routes ville:",km)
 
 print("fin km, debut affiche chemain:", datetime.now())
 
