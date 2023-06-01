@@ -45,8 +45,8 @@ ox.plot_graph(graph)
 plt.show()
 
 
-def gps(depart, arrive,graph) :
-    if (depart==213955395 and arrive==213955379):
+def gps(depart, arrive,graph) : #il faut afficher le chemian on fait un tour de boucle, on repasse et re 1tour
+    if (depart==213955395 and arrive==213955379): 
         return[(depart,arrive)] #1,8km = demi tour,Prendre Ch. Bates en direction de Av. Rockland, Prendre à droite sur Av. du Manoir,Av. Rockland,Av. Dresden/Rue Jean-Talon O, Rue Fleet, Av. Beaumont, Chem. Rockland/Av. Rockland, Av. Rockland
     elif (depart==213955444 and arrive==213955379): #presque pareil apres 
         return[(depart,arrive)]
@@ -59,6 +59,7 @@ def gps(depart, arrive,graph) :
     while(i+1<len(route)):
         L+=[(route[i],route[i+1])]
         i+=1
+    L+=[(arrive,depart)] + L
     return L
 
 def circuit_euler(graph,parcour,graph_montreal):
