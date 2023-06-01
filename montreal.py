@@ -7,7 +7,7 @@ import copy
 
 
 print("debut:", datetime.now())
-graph = ox.graph_from_place("Montréal, Canada", network_type='all')
+graph = ox.graph_from_place("Montréal, Canada", network_type='drive') #deneige que les routes
 
 ox.plot_graph(graph)
 plt.show()
@@ -50,7 +50,11 @@ km = 0
 for u, v,z in graph.edges:
     km += graph[u][v][0]['length']
 
-print("Distance parcourue:", km_parcouru, "m. Distance routes ville:",km)
+print("Distance parcourue:", km_parcouru/1000, "km. Distance routes ville:",km/1000)
+prix = 100 + 0.01*km_parcouru/1000
+prix = math.floor(prix *100)/100 + 0.01
+prix = Decimal(prix).quantize(Decimal('0.00'), rounding=ROUND_DOWN)
+print("Prix drone outremont :", prix, "€")
 
 print("fin km, debut affiche chemain:", datetime.now())
 

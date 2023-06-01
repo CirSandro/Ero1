@@ -10,10 +10,19 @@ import random
 
 print(datetime.now())
 graph = ox.graph_from_place("Outremont, Montréal, Canada", network_type='drive') #juste voiture
-graph_juste_montreal = ox.graph_from_place("Montréal, Canada", network_type='drive')
-graph_juste_royal = ox.graph_from_place("Mont-Royal, Canada", network_type='drive')
+# graph_juste_montreal = ox.graph_from_place("Montréal, Canada", network_type='drive')
+# graph_juste_royal = ox.graph_from_place("Mont-Royal, Canada", network_type='drive')
 
-graph_montreal = nx.compose(graph_juste_montreal,graph_juste_royal)
+# graph_montreal = nx.compose(graph_juste_montreal,graph_juste_royal)
+
+north = 45.530
+south = 45.480
+east = -73.570
+west = -73.640
+#bbox = (north, south, east, west)
+
+graph_montreal = ox.graph_from_bbox(north, south, east, west, network_type='drive')
+
 
 # route = nx.shortest_path(graph_montreal, source=213955306, target=213955379, weight='length') #213955379 and 213955306
 # fig, ax = ox.plot_graph_route(graph_montreal, route, node_size=0)
@@ -41,17 +50,11 @@ for (a, b, c) in graph.edges(data=True):
 # print(d_graph)
 
 
-ox.plot_graph(graph)
+ox.plot_graph(graph_montreal)
 plt.show()
 
 
 def gps(depart, arrive,graph) : #il faut afficher le chemian on fait un tour de boucle, on repasse et re 1tour
-    if (depart==213955395 and arrive==213955379): 
-        return[(depart,arrive)] #1,8km = demi tour,Prendre Ch. Bates en direction de Av. Rockland, Prendre à droite sur Av. du Manoir,Av. Rockland,Av. Dresden/Rue Jean-Talon O, Rue Fleet, Av. Beaumont, Chem. Rockland/Av. Rockland, Av. Rockland
-    elif (depart==213955444 and arrive==213955379): #presque pareil apres 
-        return[(depart,arrive)]
-    elif(depart==213955379 and arrive==213955306): #rien en bas car deja deneiger
-        return[(depart,arrive)] #je crois pas bon = probleme dcp avec tout avant on est pas passer par la route il faut revenir au point d'avant et refair le tour??
     route = nx.shortest_path(graph, source=depart, target=arrive, weight='length')
     #fig, ax = ox.plot_graph_route(graph, route_by_length, node_size=0)
     L = []
@@ -67,8 +70,8 @@ def circuit_euler(graph,parcour,graph_montreal):
     for u,v in parcour :
         if v in graph[u]:
             circ+=[(u,v)]
-        else :#autre = chemain le plus cours entre u et v ?ap, pour coin creee arrete
-            circ+=gps(u,v,graph_montreal) #ATTENTION, pour route sens unique en coin de graph peut etre faire gps sur Montreal entier
+        else :
+            circ+=gps(u,v,graph_montreal)
     return circ
 
 
@@ -77,7 +80,7 @@ graph_copy = copy.deepcopy(graph)
 graph_oriente = copy.deepcopy(graph)
 
 if not nx.is_eulerian(graph):
-    graph_temp = graph_copy.to_undirected() #probleme = graphe n'est plus orienter mais sans cela compile pas
+    graph_temp = graph_copy.to_undirected()
     graph_euler = nx.eulerize(graph_temp)
     circuit_non_oriente = list(nx.eulerian_circuit(graph_euler))
 
@@ -106,14 +109,7 @@ for x,y in circuit:
 km_parcouru = 0
 
 for u, v in circuit:
-    if (u==213955395 and v==213955379):
-        km_parcouru+= 1800
-    elif (u==213955444 and v==213955379): #presque pareil
-        km_parcouru+= 2000
-    elif(u==213955379 and v==213955306): #rien en bas car deja deneiger
-        km_parcouru+=0
-    else:
-        km_parcouru += graph_montreal[u][v][0]['length']
+    km_parcouru += graph_montreal[u][v][0]['length']
 
 
 km = 0
@@ -122,6 +118,23 @@ for u, v,z in graph.edges:
     km += graph[u][v][0]['length']
 
 print("Distance parcourue:", km_parcouru, "m. Distance routes ville:",km)
+#ici on fait avec véhicule le plus long/moin chere
+
+vitess = 10
+temps = (km_parcouru /1000)/vitess
+print("temps de parcours:",temps)
+
+jour = 500
+conso = 1.1
+prix_time = 0
+if temps>8:
+    prix_time = 8.8 + (temps-8)*1.3
+else:
+    prix_time= 1.1*temps
+#1,1€ /h les 8premieres heures puis 1,3€ /h
+prix = jour + conso*km_parcouru/1000 + prix_time
+prix = ((prix *100)//1)/100 + 0.01
+print("Prix deneigement outremont :", prix, "€")
 
 
 ox.plot_graph(graph, edge_color=color)

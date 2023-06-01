@@ -3,11 +3,14 @@ import matplotlib.pyplot as plt
 import networkx as nx
 from datetime import datetime
 from time import strftime
+import math
 import copy
+from decimal import Decimal, ROUND_DOWN
+
 
 
 print(datetime.now())
-graph = ox.graph_from_place("Outremont, Montréal, Canada", network_type='all')
+graph = ox.graph_from_place("Outremont, Montréal, Canada", network_type='drive')
 
 ox.plot_graph(graph)
 plt.show()
@@ -49,9 +52,10 @@ km = 0
 for u, v,z in graph.edges:
     km += graph[u][v][0]['length']
 
-print("Distance parcourue:", km_parcouru / 1000, "km. Distance routes ville:",km)
+print("Distance parcourue:", km_parcouru / 1000, "km. Distance routes ville:",km/1000)
 prix = 100 + 0.01*km_parcouru/1000
-prix = ((prix *100)//1)/100 + 0.01
+prix = math.floor(prix *100)/100 + 0.01
+prix = Decimal(prix).quantize(Decimal('0.00'), rounding=ROUND_DOWN)
 print("Prix drone outremont :", prix, "€")
 
 
