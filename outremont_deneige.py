@@ -147,7 +147,6 @@
 
 
 
-# YOU1
 import osmnx as ox
 import matplotlib.pyplot as plt
 import networkx as nx
@@ -155,6 +154,8 @@ from datetime import datetime
 from time import strftime
 import copy
 import random
+import math
+from decimal import Decimal, ROUND_DOWN
 
 print(datetime.now())
 graph = ox.graph_from_place("Outremont, Montréal, Canada", network_type='drive') #juste voiture
@@ -218,10 +219,11 @@ else:
     graph_euler = graph_copy
     circuit = list(nx.eulerian_circuit(graph_euler))
 
+
 circuit_depart = depart_deneigeuse(circuit, 221106437)
 
 print(circuit_depart)
-print("Départ:", circuit_depart[0][0], "arrive bien à la fin:", circuit_depart[-1][-1])
+print("Départ deneigeuse St-Domonique aller noeud:", circuit_depart[0][0], "arrive bien à la fin:", circuit_depart[-1][-1], ", retour entrepôt (les km sont comptés)")
 
 color = ['blue' for i in graph.edges]
 for x, y in circuit_depart:
@@ -229,19 +231,20 @@ for x, y in circuit_depart:
     for u, v, z in graph.edges:
         if (x == u and y == v) or (x == v and y == u):
             color[j] = 'red'
-            ox.plot_graph(graph, edge_color=color)
-            plt.show()
+            # ox.plot_graph(graph, edge_color=color)
+            # plt.show()
         j += 1
 
-km_parcouru = 0
+km_parcouru = 3000
 for u, v in circuit_depart:
     km_parcouru += graph_montreal[u][v][0]['length']
 
-km = 0
+km = 3000
 for u, v, z in graph.edges:
     km += graph[u][v][0]['length']
 
 print("Distance parcourue:", km_parcouru, "m. Distance routes ville:", km)
+#ici on fait avec véhicule le plus long/moin chere
 
 vitess = 10
 temps = (km_parcouru / 1000) / vitess
@@ -250,15 +253,16 @@ print("Temps de parcours:", temps)
 jour = 500
 conso = 1.1
 prix_time = 0
+#1,1€ /h les 8premieres heures puis 1,3€ /h
 if temps > 8:
     prix_time = 8.8 + (temps - 8) * 1.3
 else:
     prix_time = 1.1 * temps
 
-prix = jour + conso * km_parcouru / 1000 + prix_time
-prix = ((prix * 100) // 1) / 100 + 0.01
-print("Prix déneigement Outremont :", prix, "€")
+prix = jour + conso*km_parcouru/1000 + prix_time
+prix = math.floor(prix *100)/100 + 0.01
+prix = Decimal(prix).quantize(Decimal('0.00'), rounding=ROUND_DOWN)
+print("Prix deneigement outremont :", prix, "€")
 
 ox.plot_graph(graph, edge_color=color)
 plt.show()
-# fin YOU1

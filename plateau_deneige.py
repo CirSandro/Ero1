@@ -53,7 +53,23 @@ def circuit_euler(graph,parcour,graph_montreal):
             circ+=gps(u,v,graph_montreal)
     return circ
 
+def depart_deneigeuse(circuit, node):
+    index = -1
+    for i, (u, v) in enumerate(circuit):
+        if u == node:
+            index = i
+            break
 
+    if index != -1:
+        part1 = circuit[:index]
+        part2 = circuit[index:]
+
+        circuit_depart = part2 + part1
+
+        return circuit_depart
+    else:
+        print("Le nœud de départ spécifié n'est pas présent dans le circuit.")
+        return None
 
 graph_copy = copy.deepcopy(graph)
 graph_oriente = copy.deepcopy(graph)
@@ -68,10 +84,10 @@ else:
     graph_euler = graph_copy
     circuit = list(nx.eulerian_circuit(graph_euler))
 
-
+circuit = depart_deneigeuse(circuit, 3373402628)
 
 print(circuit)
-print("Depart:", circuit[0][0], "arrive bien à la fin:", circuit[-1][-1])
+print("Depart Depart deneigeuse Sherbrooke aller noeud::", circuit[0][0], "arrive bien à la fin:", circuit[-1][-1])
 
 
 color = ['blue' for i in graph.edges]
@@ -80,8 +96,9 @@ for x,y in circuit:
     for u,v,z in graph.edges :
         if (x == u and y == v) or (x == v and y == u):
             color[j] = 'red'
-            #ox.plot_graph(graph, edge_color=color)
-            #plt.show()
+            # print(u,v) #3373402628
+            # ox.plot_graph(graph, edge_color=color)
+            # plt.show()
         j+=1
 
 

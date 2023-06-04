@@ -20,9 +20,10 @@ west = -73.680
 graph_montreal = ox.graph_from_bbox(north, south, east, west, network_type='drive')
 # print(graph[8891093461])
 # print(graph[8891081678])
-# route = nx.shortest_path(graph_montreal, source=10917010402, target=8891081688, weight='length') #8891081688   a    110468282
-# fig, ax = ox.plot_graph_route(graph_montreal, route, node_size=0)
-
+# print(graph_montreal.edges())#2388532789
+# route = nx.shortest_path(graph_montreal, source=2388532789, target=2388532780, weight='length') #8891081688   a    110468282
+# fig, ax = ox.plot_graph_route(graph_montreal, route, node_size=0)#10913959485, 8875463745
+# print(route)
 d_graph = nx.DiGraph()
 n_graph = nx.Graph()
 edges = set()
@@ -85,6 +86,23 @@ def circuit_euler(graph,parcour,graph_montreal):
             circ+=gps(u,v,graph_montreal)
     return circ
 
+def depart_deneigeuse(circuit, node):
+    index = -1
+    for i, (u, v) in enumerate(circuit):
+        if u == node:
+            index = i
+            break
+
+    if index != -1:
+        part1 = circuit[:index]
+        part2 = circuit[index:]
+
+        circuit_depart = part2 + part1
+
+        return circuit_depart
+    else:
+        print("Le nœud de départ spécifié n'est pas présent dans le circuit.")
+        return None
 
 
 graph_copy = copy.deepcopy(graph)
@@ -101,10 +119,10 @@ else:
     graph_euler = graph_copy
     circuit = list(nx.eulerian_circuit(graph_euler))
 
-
+circuit = depart_deneigeuse(circuit, 2388532789)
 
 print(circuit)
-print("Depart:", circuit[0][0], "arrive bien à la fin:", circuit[-1][-1])
+print("Depart deneigeuse Biodôme/Planétarium aller noeud:", circuit[0][0], "arrive bien à la fin:", circuit[-1][-1], ", retour entrepôt (les km sont comptés)")
 
 
 color = ['blue' for i in graph.edges] #graph_montreal ici ou remettre autre node
@@ -122,8 +140,9 @@ for x,y in circuit:
     for u,v,z in graph.edges :
         if (x == u and y == v) or (x == v and y == u):
             color[j] = 'red'
-            #ox.plot_graph(graph, edge_color=color)
-            #plt.show()
+            #print(u,v)
+            # ox.plot_graph(graph, edge_color=color)
+            # plt.show()
         j+=1
     if x == 8891093461:
         x = 573353392
@@ -135,7 +154,7 @@ for x,y in circuit:
         y = 10917010402
 
 
-km_parcouru = 0 #5600 #du a une autoraut en bord d'arrete
+km_parcouru = 20800 #5600 #du a une autoraut en bord d'arrete
 
 att = 0
 stock = 0
@@ -152,7 +171,7 @@ for u, v in circuit:
 
 
 
-km = 0
+km = 20800
 
 for u, v,z in graph.edges:
     km += graph[u][v][0]['length']
