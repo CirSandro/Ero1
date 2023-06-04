@@ -14,3 +14,24 @@ pip install osmnx
     ./ero1.sh -drone:Outremont -deneigeuse             => lance drone et deneigeuse sur Outremont
 
 
+ARCHITECTURE : 
+.
+├── AUTHORS.txt
+├── ero1.sh
+├── Hierholzer.py
+├── info_sujet.txt
+├── README.txt
+└── src
+    ├── deneigeuse
+    │   ├── outremont_deneige.py
+    │   ├── plateau_deneige.py
+    │   ├── riviere_deneige.py
+    │   ├── saint_leonard_deneige.py
+    │   └── verdun_deneige.py
+    └── drone
+        ├── montreal.py
+        ├── outremont.py
+        ├── plateau_drone.py
+        ├── riviere_drone.py
+        ├── saint_leonard_drone.py
+        └── verdun_drone.py
