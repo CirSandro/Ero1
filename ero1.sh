@@ -83,6 +83,7 @@ then
         python3 riviere_deneige.py
     fi
 elif [ "$1" = "-drone:Le-Plateau-Mont-Royal" ] || [ "$1" = "-drone:Plateau-Mont-Royal" ] || [ "$1" = "-drone:Le_Plateau-Mont-Royal" ]
+then
     python3 plateau_drone.py
     if [ "$2" = "-deneigeuse" ]
     then

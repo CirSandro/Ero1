@@ -248,7 +248,9 @@ print("Distance parcourue:", km_parcouru, "m. Distance routes ville:", km)
 
 vitess = 10
 temps = (km_parcouru / 1000) / vitess
-print("Temps de parcours:", temps)
+duree = math.floor(temps *100)/100 + 0.01
+duree = Decimal(duree).quantize(Decimal('0.00'), rounding=ROUND_DOWN)
+print("Temps de parcours:", duree,"heures")
 
 jour = 500
 conso = 1.1
