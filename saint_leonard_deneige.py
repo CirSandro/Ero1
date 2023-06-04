@@ -9,12 +9,12 @@ import math
 from decimal import Decimal, ROUND_DOWN
 
 print(datetime.now())
-graph = ox.graph_from_place("Verdun, Montréal, Canada", network_type='drive') #juste voiture
+graph = ox.graph_from_place("Saint-Léonard, Montréal, Canada", network_type='drive') #juste voiture
 
-north = 45.520
-south = 45.430
+north = 45.625
+south = 45.540
 east = -73.510
-west = -73.610
+west = -73.651
 
 graph_montreal = ox.graph_from_bbox(north, south, east, west, network_type='drive')
 
