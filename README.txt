@@ -4,15 +4,18 @@ pip install osmnx
 
 
 -> Pour essayer notre programme il faut utiliser le script ./ero1 comme ceci (Outremont est un exemple autres quartiers possibles):
-    ./ero1.sh                                           => lance le drone sur toute la ville et deneige les 5 quartiers (ATTENTION: drone sur la ville +48h) avec la machine1 de base
-    ./ero1.sh -drone                                    => lance seulement le drone sur toute la ville
-    ./ero1.sh -drone:Outremont                          => lance le drone seulement sur le quartier d'Outremont (sinon: Verdun, Saint-Léonard, Rivière, Plateau-Mont-Royal)
-    ./ero1.sh -deneigeuse1                              => lance la deneigeuse sur les 5 quartiers avec la première machine
-    ./ero1.sh -deneigeuse2                              => lance la deneigeuse sur les 5 quartiers avec la deuxième machine
-    ./ero1.sh -deneigeuse1:Outremont                    => lance la deneigeuse seulement sur Outremont(autres quartiers aussi, et autre machine aussi)
-    ./ero1.sh -drone -deneigeuse1:Outremont             => lance le drone sur toute la ville et deneigeuse sur Outremont
-    ./ero1.sh -drone:Outremont -deneigeuse1:Outremont   => lance drone et deneigeuse sur Outremont
-    ./ero1.sh -drone:Outremont -deneigeuse1             => lance drone et deneigeuse sur Outremont
+    ./ero1.sh                                               => lance le drone sur toute la ville et deneige les 5 quartiers (ATTENTION: drone sur la ville +48h) avec la machine1 de base
+    ./ero1.sh -drone                                        => lance seulement le drone sur toute la ville
+    ./ero1.sh -drone:Outremont                              => lance le drone seulement sur le quartier d'Outremont (sinon: Verdun, Saint-Léonard, Rivière, Plateau-Mont-Royal)
+    ./ero1.sh -deneigeuse1                                  => lance la deneigeuse sur les 5 quartiers avec la première machine
+    ./ero1.sh -deneigeuse2                                  => lance la deneigeuse sur les 5 quartiers avec la deuxième machine
+    ./ero1.sh -deneigeuse1:Outremont                        => lance la deneigeuse seulement sur Outremont(autres quartiers aussi, et autre machine aussi)
+    ./ero1.sh -drone -deneigeuse1:Outremont                 => lance le drone sur toute la ville et deneigeuse sur Outremont
+    ./ero1.sh -drone:Outremont -deneigeuse1:Outremont       => lance drone et deneigeuse sur Outremont
+    ./ero1.sh -drone:Outremont -deneigeuse1                 => lance drone et deneigeuse sur Outremont
+    
+nous avons pas eu le temps de faire pour n deneigeuse ou sur un autre quartier, les valeurs se motifient à la main dans le fichier
+    python3 src//deneigeuse/plusieur_machine/outremont.py   => lance 2 deneigeuses de type1 sur le quartier d'Outremont
 
 
 ARCHITECTURE : 
