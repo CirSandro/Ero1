@@ -15,7 +15,7 @@ pip install osmnx
     ./ero1.sh -drone:Outremont -deneigeuse1                 => lance drone et deneigeuse sur Outremont
     
 nous avons pas eu le temps de faire pour n deneigeuse ou sur un autre quartier, les valeurs se motifient à la main dans le fichier
-    python3 src//deneigeuse/plusieur_machine/outremont.py   => lance n deneigeuses de type1 sur le quartier d'Outremont
+    python3 src/deneigeuse/plusieur_machine/outremont.py   => lance n deneigeuses de type1 sur le quartier d'Outremont
 
 
 ARCHITECTURE : 
