@@ -22,7 +22,6 @@ ARCHITECTURE :
 .
 ├── AUTHORS.txt
 ├── ero1.sh
-├── Hierholzer.py
 ├── info_sujet.txt
 ├── README.txt
 └── src
@@ -33,12 +32,14 @@ ARCHITECTURE :
     │   │   ├── riviere_deneige.py
     │   │   ├── saint_leonard_deneige.py
     │   │   └── verdun_deneige.py
-    │   └── machine_2
-    │       ├── outremont_deneige.py
-    │       ├── plateau_deneige.py
-    │       ├── riviere_deneige.py
-    │       ├── saint_leonard_deneige.py
-    │       └── verdun_deneige.py
+    │   ├── machine_2
+    │   │   ├── outremont_deneige.py
+    │   │   ├── plateau_deneige.py
+    │   │   ├── riviere_deneige.py
+    │   │   ├── saint_leonard_deneige.py
+    │   │   └── verdun_deneige.py
+    │   └── plusieur_machine
+    │       └── outremont.py
     └── drone
         ├── montreal.py
         ├── outremont.py
@@ -46,6 +47,7 @@ ARCHITECTURE :
         ├── riviere_drone.py
         ├── saint_leonard_drone.py
         └── verdun_drone.py
+
 
 Utilisation OSMnx:
 Boeing, G. 2017. OSMnx: New Methods for Acquiring, Constructing, Analyzing, and Visualizing Complex Street Networks. Computers, Environment and Urban Systems 65, 126-139. doi:10.1016/j.compenvurbsys.2017.05.004

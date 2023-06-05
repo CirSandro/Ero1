@@ -259,5 +259,5 @@ for i, circuit_machine in enumerate(machines):
 #machine_1(km_parcouru1,km_parcouru2)
 # machine_2(km_parcouru1,km_parcouru2)
 
-ox.plot_graph(graph, edge_color=color)
+ox.plot_graph(graph, edge_color=colors)
 plt.show()
