@@ -5,6 +5,7 @@ from datetime import datetime
 from time import strftime
 import copy
 import random
+import matplotlib.colors as mcolors
 
 print(datetime.now())
 graph = ox.graph_from_place("Outremont, Montréal, Canada", network_type='drive') #juste voiture
@@ -97,39 +98,27 @@ for i in range(n):
 
 
 
-colors = [random.choice(['blue', 'red', 'green', 'orange', 'purple', 'pink', 'brown', 'gray', 'cyan', 'magenta']) for _ in graph.edges]
+
+colors = [random.choice(list(mcolors.CSS4_COLORS.keys())) for _ in graph.edges]
+
+# Liste des couleurs uniques pour chaque déneigeuse
+unique_colors = []
+for i in range(n):
+    # Vérifier que la couleur est unique
+    while True:
+        color = random.choice(list(mcolors.CSS4_COLORS.keys()))
+        if color not in unique_colors:
+            unique_colors.append(color)
+            break
 
 for i, circuit_departure in enumerate(circuit_departures):
-    color = colors[i]
-
-    # Vérifier que la couleur de la déneigeuse i est différente des autres déneigeuses
-    for j in range(i):
-        if colors[j] == color:
-            # Modifier la couleur si elle est identique à une autre déneigeuse
-            color = random.choice(['blue', 'red', 'green', 'orange', 'purple', 'pink', 'brown', 'gray', 'cyan', 'magenta'])
-            colors[i] = color
-            break
+    color = unique_colors[i]
 
     # Colorier le circuit de la déneigeuse i
     for x, y in circuit_departure:
         for j, (u, v, _) in enumerate(graph.edges):
             if (x == u and y == v) or (x == v and y == u):
                 colors[j] = color
-
-    # Vérifier que la couleur de la déneigeuse i est différente des autres déneigeuses (à nouveau)
-    for j in range(i):
-        if colors[j] == color:
-            # Afficher un avertissement si la couleur n'a pas pu être modifiée
-            print(f"Attention : La déneigeuse {i+1} a la même couleur qu'une autre déneigeuse.")
-            break
-
-
-
-
-
-
-
-
 
 
 
