@@ -7,6 +7,7 @@ import copy
 import random
 import math
 from decimal import Decimal, ROUND_DOWN
+import matplotlib.colors as mcolors
 
 print(datetime.now())
 graph = ox.graph_from_place("Outremont, Montréal, Canada", network_type='drive') #juste voiture
@@ -18,6 +19,8 @@ west = -73.640
 
 graph_montreal = ox.graph_from_bbox(north, south, east, west, network_type='drive')
 
+# Demander à l'utilisateur le nombre de déneigeuses (n)
+n = int(input("Entrez le nombre de déneigeuses : "))
 
 def gps(depart, arrive, graph):
     route = nx.shortest_path(graph, source=depart, target=arrive, weight='length')
@@ -74,9 +77,6 @@ circuit_depart = depart_deneigeuse(circuit, 221106437)
 
 print(circuit_depart)
 print("Départ deneigeuse St-Domonique aller noeud:", circuit_depart[0][0], "arrive bien à la fin:", circuit_depart[-1][-1], ", retour entrepôt (les km sont comptés)")
-
-# Demander à l'utilisateur le nombre de déneigeuses (n)
-n = int(input("Entrez le nombre de déneigeuses : "))
 
 # # Diviser le circuit en deux pour les deux déneigeuses
 # half_len = len(circuit_depart) // 2 #2véhicule
@@ -139,6 +139,7 @@ for i in range(n):
 
 
 
+
 def machine_1(km_parcouru) :
     vitess = 10
     temps = (km_parcouru / 1000) / vitess
@@ -186,36 +187,52 @@ def machine_2(km_parcouru) :
     print("Prix déneigement de cette déneigeuse à Outremont:", prix, "€")
 
 
-colors = [random.choice(['blue', 'red', 'green', 'orange', 'purple', 'pink', 'brown', 'gray', 'cyan', 'magenta']) for _ in graph.edges]
+# colors = [random.choice(['blue', 'red', 'green', 'orange', 'purple', 'pink', 'brown', 'gray', 'cyan', 'magenta']) for _ in graph.edges]
+
+# for i, circuit_machine in enumerate(machines):
+#     color = colors[i]
+
+#     # Vérifier que la couleur de la déneigeuse i est différente des autres déneigeuses
+#     for j in range(i):
+#         if colors[j] == color:
+#             # Modifier la couleur si elle est identique à une autre déneigeuse
+#             color = random.choice(['blue', 'red', 'green', 'orange', 'purple', 'pink', 'brown', 'gray', 'cyan', 'magenta'])
+#             colors[i] = color
+#             break
+
+#     # Colorier le circuit de la déneigeuse i
+#     for x, y in circuit_machine:
+#         for j, (u, v, _) in enumerate(graph.edges):
+#             if (x == u and y == v) or (x == v and y == u):
+#                 colors[j] = color
+
+#     # Vérifier que la couleur de la déneigeuse i est différente des autres déneigeuses (à nouveau)
+#     for j in range(i):
+#         if colors[j] == color:
+#             # Afficher un avertissement si la couleur n'a pas pu être modifiée
+#             print(f"Attention : La déneigeuse {i+1} a la même couleur qu'une autre déneigeuse.")
+#             break
+
+colors = [random.choice(list(mcolors.CSS4_COLORS.keys())) for _ in graph.edges]
+
+# Liste des couleurs uniques pour chaque déneigeuse
+unique_colors = []
+for i in range(n):
+    # Vérifier que la couleur est unique
+    while True:
+        color = random.choice(list(mcolors.CSS4_COLORS.keys()))
+        if color not in unique_colors:
+            unique_colors.append(color)
+            break
 
 for i, circuit_machine in enumerate(machines):
-    color = colors[i]
-
-    # Vérifier que la couleur de la déneigeuse i est différente des autres déneigeuses
-    for j in range(i):
-        if colors[j] == color:
-            # Modifier la couleur si elle est identique à une autre déneigeuse
-            color = random.choice(['blue', 'red', 'green', 'orange', 'purple', 'pink', 'brown', 'gray', 'cyan', 'magenta'])
-            colors[i] = color
-            break
+    color = unique_colors[i]
 
     # Colorier le circuit de la déneigeuse i
     for x, y in circuit_machine:
         for j, (u, v, _) in enumerate(graph.edges):
             if (x == u and y == v) or (x == v and y == u):
                 colors[j] = color
-
-    # Vérifier que la couleur de la déneigeuse i est différente des autres déneigeuses (à nouveau)
-    for j in range(i):
-        if colors[j] == color:
-            # Afficher un avertissement si la couleur n'a pas pu être modifiée
-            print(f"Attention : La déneigeuse {i+1} a la même couleur qu'une autre déneigeuse.")
-            break
-
-
-
-
-
 
 
 
