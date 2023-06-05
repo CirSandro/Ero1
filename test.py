@@ -73,77 +73,94 @@ circuit_depart = depart_deneigeuse(circuit, 221106437)
 print(circuit_depart)
 print("Départ:", circuit_depart[0][0], "arrive bien à la fin:", circuit_depart[-1][-1])
 
-# Diviser le circuit en deux pour les deux déneigeuses
-half_len = len(circuit_depart) // 2
-circuit_depart1 = circuit_depart[:half_len]
-circuit_depart2 = circuit_depart[half_len:]
+# Demander à l'utilisateur le nombre de déneigeuses (n)
+n = int(input("Entrez le nombre de déneigeuses : "))
 
-print("Circuit déneigeuse 1:", circuit_depart1)
-print("Circuit déneigeuse 2:", circuit_depart2)
+# Diviser le circuit en n sous-circuits pour les n déneigeuses
+circuit_departures = []
+step = len(circuit_depart) // n
+for i in range(n):
+    circuit_departure = circuit_depart[i*step:(i+1)*step]
+    circuit_departures.append(circuit_departure)
 
-color = ['blue' for i in graph.edges]
+# Générer des couleurs aléatoires pour chaque déneigeuse
+#colors = [random.choice(['blue', 'red', 'green', 'orange', 'purple', 'pink', 'brown', 'gray', 'cyan', 'magenta']) for _ in graph.edges]
 
-# Colorier le circuit de la déneigeuse 1 en rouge
-for x, y in circuit_depart1:
-    j = 0
-    for u, v, z in graph.edges:
-        if (x == u and y == v) or (x == v and y == u):
-            color[j] = 'red'
-        j += 1
+#for i, circuit_departure in enumerate(circuit_departures):
+#    color = colors[i]
 
-# Colorier le circuit de la déneigeuse 2 en vert
-for x, y in circuit_depart2:
-    j = 0
-    for u, v, z in graph.edges:
-        if (x == u and y == v) or (x == v and y == u):
-            color[j] = 'green'
-        j += 1
+    # Colorier le circuit de la déneigeuse i
+#    for x, y in circuit_departure:
+#        for j, (u, v, _) in enumerate(graph.edges):
+#            if (x == u and y == v) or (x == v and y == u):
+#                colors[j] = color
 
-km_parcouru1 = 0
-for u, v in circuit_depart1:
-    km_parcouru1 += graph_montreal[u][v][0]['length']
 
-km_parcouru2 = 0
-for u, v in circuit_depart2:
-    km_parcouru2 += graph_montreal[u][v][0]['length']
 
-km = 0
-for u, v, z in graph.edges:
-    km += graph[u][v][0]['length']
+colors = [random.choice(['blue', 'red', 'green', 'orange', 'purple', 'pink', 'brown', 'gray', 'cyan', 'magenta']) for _ in graph.edges]
 
-print("Distance parcourue déneigeuse 1:", km_parcouru1, "m. Distance parcourue déneigeuse 2:", km_parcouru2)
-print("Distance totale des routes dans le quartier:", km)
+for i, circuit_departure in enumerate(circuit_departures):
+    color = colors[i]
 
-vitess = 10
-temps1 = (km_parcouru1 / 1000) / vitess
-temps2 = (km_parcouru2 / 1000) / vitess
+    # Vérifier que la couleur de la déneigeuse i est différente des autres déneigeuses
+    for j in range(i):
+        if colors[j] == color:
+            # Modifier la couleur si elle est identique à une autre déneigeuse
+            color = random.choice(['blue', 'red', 'green', 'orange', 'purple', 'pink', 'brown', 'gray', 'cyan', 'magenta'])
+            colors[i] = color
+            break
 
-print("Temps de parcours déneigeuse 1:", temps1)
-print("Temps de parcours déneigeuse 2:", temps2)
+    # Colorier le circuit de la déneigeuse i
+    for x, y in circuit_departure:
+        for j, (u, v, _) in enumerate(graph.edges):
+            if (x == u and y == v) or (x == v and y == u):
+                colors[j] = color
 
-jour = 500
-conso = 1.1
-prix_time1 = 0
-prix_time2 = 0
+    # Vérifier que la couleur de la déneigeuse i est différente des autres déneigeuses (à nouveau)
+    for j in range(i):
+        if colors[j] == color:
+            # Afficher un avertissement si la couleur n'a pas pu être modifiée
+            print(f"Attention : La déneigeuse {i+1} a la même couleur qu'une autre déneigeuse.")
+            break
 
-if temps1 > 8:
-    prix_time1 = 8.8 + (temps1 - 8) * 1.3
-else:
-    prix_time1 = 1.1 * temps1
 
-if temps2 > 8:
-    prix_time2 = 8.8 + (temps2 - 8) * 1.3
-else:
-    prix_time2 = 1.1 * temps2
 
-prix1 = jour + conso * km_parcouru1 / 1000 + prix_time1
-prix2 = jour + conso * km_parcouru2 / 1000 + prix_time2
 
-prix1 = ((prix1 * 100) // 1) / 100 + 0.01
-prix2 = ((prix2 * 100) // 1) / 100 + 0.01
 
-print("Prix déneigement déneigeuse 1 à Outremont:", prix1, "€")
-print("Prix déneigement déneigeuse 2 à Outremont:", prix2, "€")
 
-ox.plot_graph(graph, edge_color=color)
+
+
+
+
+
+
+    km_parcouru = 0
+    for u, v in circuit_departure:
+        km_parcouru += graph_montreal[u][v][0]['length']
+
+    km = 0
+    for u, v, _ in graph.edges:
+        km += graph[u][v][0]['length']
+
+    print(f"Distance parcourue déneigeuse {i+1}: {km_parcouru} m. Distance totale des routes dans le quartier: {km} m.")
+
+    vitess = 10
+    temps = (km_parcouru / 1000) / vitess
+    print(f"Temps de parcours déneigeuse {i+1}: {temps} heures")
+
+    jour = 500
+    conso = 1.1
+    prix_time = 0
+
+    if temps > 8:
+        prix_time = 8.8 + (temps - 8) * 1.3
+    else:
+        prix_time = 1.1 * temps
+
+    prix = jour + conso * km_parcouru / 1000 + prix_time
+    prix = round(prix, 2)
+
+    print(f"Prix déneigement déneigeuse {i+1} à Outremont: {prix} €")
+
+ox.plot_graph(graph, edge_color=colors)
 plt.show()
