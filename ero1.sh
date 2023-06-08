@@ -195,7 +195,7 @@ then
 elif [ "$1" = "-deneigeuse2:Saint-Léonard" ] #fair ensuite pour chaque autre ficher
 then
     python3 src/deneigeuse/machine_2/saint_leonard_deneige.py
-elif [ "$1" = "-deneigeuse2:Rivière-des-prairies-pointe-aux-trembles" ] || [ "$2" = "-deneigeuse2:Rivière" ]
+elif [ "$1" = "-deneigeuse2:Rivière-des-prairies-pointe-aux-trembles" ] || [ "$1" = "-deneigeuse2:Rivière" ]
 then
     python3 src/deneigeuse/machine_2/riviere_deneige.py
 elif [ "$1" = "-deneigeuse2:Le-Plateau-Mont-Royal" ] || [ "$1" = "-deneigeuse2:Plateau-Mont-Royal" ] || [ "$1" = "-deneigeuse2:Le_Plateau-Mont-Royal" ]

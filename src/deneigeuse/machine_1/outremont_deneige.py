@@ -166,6 +166,9 @@ east = -73.570
 west = -73.640
 
 graph_montreal = ox.graph_from_bbox(north, south, east, west, network_type='drive')
+ox.plot_graph(graph_montreal)
+plt.show()
+
 
 
 def gps(depart, arrive, graph):
@@ -236,6 +239,7 @@ for x, y in circuit_depart:
         j += 1
 
 km_parcouru = 3000
+graph_montreal = graph_montreal.to_undirected()
 for u, v in circuit_depart:
     km_parcouru += graph_montreal[u][v][0]['length']
 

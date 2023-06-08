@@ -11,6 +11,12 @@ from decimal import Decimal, ROUND_DOWN
 print("debut:", datetime.now())
 graph = ox.graph_from_place("Montréal, Canada", network_type='drive') #deneige que les routes
 
+km = 0
+graph_temp = graph.to_undirected()
+for u, v,z in graph_temp.edges:
+    km += graph_temp[u][v][0]['length']
+print(km)
+
 ox.plot_graph(graph)
 plt.show()
 print("fin graph, debut code:", datetime.now())

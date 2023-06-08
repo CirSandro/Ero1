@@ -46,11 +46,10 @@ km_parcouru = 0
 for u, v in circuit:
     km_parcouru += graph_euler[u][v][0]['length']
 
-
 km = 0
-
-for u, v,z in graph.edges:
-    km += graph[u][v][0]['length']
+graph_temp = graph.to_undirected()
+for u, v,z in graph_temp.edges:
+    km += graph_temp[u][v][0]['length']
 
 print("Distance parcourue:", km_parcouru / 1000, "km. Distance routes ville:",km/1000)
 prix = 100 + 0.01*km_parcouru/1000

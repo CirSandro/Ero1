@@ -49,6 +49,7 @@ for u, v in circuit:
 
 km = 0
 
+graph = graph.to_undirected()
 for u, v,z in graph.edges:
     km += graph[u][v][0]['length']
 

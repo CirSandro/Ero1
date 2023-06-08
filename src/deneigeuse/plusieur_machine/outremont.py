@@ -235,18 +235,19 @@ for i, circuit_machine in enumerate(machines):
                 colors[j] = color
 
 
-
+    sec_graph_montreal = graph_montreal.to_undirected()
     km_parcouru = 3000
     for u, v in circuit_machine:
-        km_parcouru += graph_montreal[u][v][0]['length']
+        km_parcouru += sec_graph_montreal[u][v][0]['length']
 
 # km_parcouru2 = 3000
 # for u, v in circuit_depart2:
 #     km_parcouru2 += graph_montreal[u][v][0]['length']
 
+    sec_graph = graph.to_undirected()
     km = 0
-    for u, v, z in graph.edges:
-        km += graph[u][v][0]['length']
+    for u, v, z in sec_graph.edges:
+        km += sec_graph[u][v][0]['length']
     
     print(f"Distance parcourue déneigeuse {i+1}: {km_parcouru} m. Distance totale des routes dans le quartier: {km} m.")
     machine_1(km_parcouru)
