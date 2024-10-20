@@ -5,7 +5,7 @@ then
     echo 'WARNING : ici vous avez lancé le drone sur tout Montréal, celui-ci dure plus de 48h, pour lancer la même chose mais avec un parcour de drone sur un quartier (ex:Outremont) faites:\n - Ctrl+C\n - ./ero1.sh -drone:Outremont -deneigeuse'
     python3 src/drone/montreal.py
     echo 'Résultat du Drone = Il faut déneiger 5 quartiers :\n — Outremont,\n — Verdun,\n — Saint-Léonard,\n — Rivière-des-prairies-pointe-aux-trembles,\n — Le Plateau-Mont-Royal.'
-    #fair un fichier qui fait les 5 et afficher sur 1grqphe de Montreql
+    #fair un fichier qui fait les 5 et afficher sur 1graphe de Montreal
     #sinon le temps :
     python3 src/deneigeuse/machine_1/outremont_deneige.py
     python3 src/deneigeuse/machine_1/verdun_deneige.py
@@ -19,7 +19,7 @@ then
     echo 'Résultat du Drone = Il faut déneiger 5 quartiers :\n — Outremont,\n — Verdun,\n — Saint-Léonard,\n — Rivière-des-prairies-pointe-aux-trembles,\n — Le Plateau-Mont-Royal.'
     if [ "$2" = "-deneigeuse1" ]
     then
-        #fair un fichier qui fait les 5 et afficher sur 1grqphe de Montreql
+        #fair un fichier qui fait les 5 et afficher sur 1graphe de Montreal
         #sinon le temps :
         python3 src/deneigeuse/machine_1/outremont_deneige.py
         python3 src/deneigeuse/machine_1/verdun_deneige.py
@@ -28,7 +28,7 @@ then
         python3 src/deneigeuse/machine_1/plateau_deneige.py
     elif [ "$2" = "-deneigeuse2" ]
     then
-        #fair un fichier qui fait les 5 et afficher sur 1grqphe de Montreql
+        #fair un fichier qui fait les 5 et afficher sur 1graphe de Montreal
         #sinon le temps :
         python3 src/deneigeuse/machine_2/outremont_deneige.py
         python3 src/deneigeuse/machine_2/verdun_deneige.py
